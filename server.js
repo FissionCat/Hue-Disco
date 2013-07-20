@@ -7,8 +7,10 @@ var handle = {
 	"/": api.index,
 	"/getlights": api.getLights,
 	"/setlights": api.setLight,
+	"/js/dancer.js": api.dancer,
 	"/js/jquery.js": api.jQuery,
-	"/js/index.js": api.indexJs
+	"/js/index.js": api.indexJs,
+	"/mp3/wantyougone": api.mp3
 }
 
 function onRequest(req, res) {
