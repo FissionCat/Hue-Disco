@@ -1,4 +1,5 @@
 $(function() {
+	var dancer = new Dancer();
 	// Button events
 	$("#getter").on("click", function(e) {
 		$.get("/getlights", function(data) {
@@ -15,9 +16,16 @@ $(function() {
 		});
 	});
 
+	$("#audio").on("pause", function(e) {
+		dancer.pause();
+	});
+
+	$("#audio").on("play", function(e) {
+		dancer.play()
+	});
+
 	// Lights!
-	var dancer = new Dancer();
-	dancer.load({src: "mp3/wantyougone"});
+	dancer.load(document.getElementsByTagName("audio")[0]);
 	var kick = dancer.createKick({
 		onKick: function(mag) {
 			console.log("Kicking!");
@@ -27,5 +35,4 @@ $(function() {
 		}
 	});
 	kick.on();
-	dancer.play();
 });
