@@ -45,37 +45,40 @@ exports.setLight = function setLight(req, res) {
 			reqObj = qs.parse(body);
 			var reqId = reqObj.id;
 			delete reqObj.id;
-			// Change numbers back to ints
-			for (key in reqObj) {
-				reqObj[key] = parseInt(reqObj[key]);
+			// Object might be empty!
+			if (JSON.stringify(reqObj) !== "{}") {
+				// Change numbers back to ints
+				for (key in reqObj) {
+					reqObj[key] = parseInt(reqObj[key]);
+				}
+
+				// Send put to chosen light
+				var options = {
+					host: HUE_IP,
+					path: "/api/newdeveloper/lights/" + reqId + "/state",
+					method: "PUT"
+				};
+
+				var hueReq = http.request(options, function(hueRes) {
+					var output = "";
+					hueRes.on("data", function(chunk) {
+						output += chunk;
+					});
+
+					hueRes.on("end", function() {
+						// Need id for callback!
+						var outputObj = JSON.parse(output);
+						console.log(outputObj)
+						// Nasty hack
+						var id = Object.keys(outputObj[0].success)[0].replace(/(^.+\D)(\d+)(\D.+$)/i,'$2');
+						res.write(id);
+						res.end();
+					});
+				});
+	console.log(JSON.stringify(reqObj));
+				hueReq.write(JSON.stringify(reqObj));
+				hueReq.end();
 			}
-
-			// Send put to chosen light
-			var options = {
-				host: HUE_IP,
-				path: "/api/newdeveloper/lights/" + reqId + "/state",
-				method: "PUT"
-			};
-
-			var hueReq = http.request(options, function(hueRes) {
-				var output = "";
-				hueRes.on("data", function(chunk) {
-					output += chunk;
-				});
-
-				hueRes.on("end", function() {
-					// Need id for callback!
-					var outputObj = JSON.parse(output);
-					console.log(outputObj)
-					// Nasty hack
-					var id = Object.keys(outputObj[0].success)[0].replace(/(^.+\D)(\d+)(\D.+$)/i,'$2');
-					res.write(id);
-					res.end();
-				});
-			});
-console.log(JSON.stringify(reqObj));
-			hueReq.write(JSON.stringify(reqObj));
-			hueReq.end();
 		});
 	}
 	// Assume 3 lights

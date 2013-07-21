@@ -26,6 +26,11 @@ $(function() {
 		dancer.play()
 	});
 
+	$("#radio").on("click", function(e) {
+		e.preventDefault();
+		e.stopPropogation();
+	});
+
 	var lightChange = [false, false, false];
 	var timeout = [null, null, null];
 	// Lights!
@@ -36,8 +41,13 @@ $(function() {
 				if (lightChange[i] === false) {
 					lightChange[i] = true;
 					console.log("Kicking! " + i);
+					// Defaults
 					var hue = Math.floor(Math.random()*65536);
 					var sat = Math.floor(Math.random()*256);
+					if ($("#mag").is(":checked")) {
+						hue = Math.floor(mag*65536);
+						sat = Math.floor(mag*256);
+					}
 					$.ajax({
 						url: "/setlight",
 						type: "PUT",
