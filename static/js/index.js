@@ -9,8 +9,10 @@ $(function() {
 
 	$("#random").on("click", function(e) {
 		$.ajax({
-			url: "/setlights",
-			type: "GET"
+			url: "/setlight",
+			type: "PUT",
+			data: {id: 1},
+			dataType: "json"
 		}).done(function(data) {
 			console.log(data);
 		});
@@ -24,14 +26,31 @@ $(function() {
 		dancer.play()
 	});
 
+	var lightChange = [false, false, false];
+	var timeout = [null, null, null];
 	// Lights!
 	dancer.load(document.getElementsByTagName("audio")[0]);
 	var kick = dancer.createKick({
 		onKick: function(mag) {
-			console.log("Kicking!");
-		},
-		offKick: function(mag) {
-			console.log("No kick :(");
+			for (var i = 0; i < 3; i++) {
+				if (lightChange[i] === false) {
+					lightChange[i] = true;
+					console.log("Kicking! " + i);
+					var hue = Math.floor(Math.random()*65536);
+					var sat = Math.floor(Math.random()*256);
+					$.ajax({
+						url: "/setlight",
+						type: "PUT",
+						data: {id: i + 1, hue: hue, sat: sat},
+						dataType: "json"
+					}).done(function(id) {
+						timeout[id - 1] = setTimeout(function() {
+							lightChange[id - 1] = false;
+							console.log("timed out " + id);
+						}, 100);
+					});
+				}
+			}
 		}
 	});
 	kick.on();

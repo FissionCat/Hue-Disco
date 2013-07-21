@@ -3,6 +3,7 @@ var http = require("http");
 var lame = require("lame");
 var Speaker = require("speaker");
 var stream = require("stream");
+var qs = require("querystring");
 
 var HUE_IP = "192.168.1.144";
 
@@ -34,30 +35,66 @@ exports.getLights = function getLights(req, res) {
 	hueReq.end();
 };
 
-exports.setLight = function setLights(req, res) {
-	// req should be 
-	var options = {
-		host: HUE_IP,
-		path: "/api/newdeveloper/lights/1/state",
-		method: "PUT"
-	};
-	var hue = Math.floor(Math.random()*65536);
-	var sat = Math.floor(Math.random()*256);
-
-	var hueReq = http.request(options, function(hueRes) {
-		var output = "";
-		hueRes.on("data", function(chunk) {
-			output += chunk;
+exports.setLight = function setLight(req, res) {
+	if (req.method.toLowerCase() === "put") {
+		var body = "";
+		req.on("data", function(chunk) {
+			body += chunk;
 		});
+		req.on("end", function() {
+			reqObj = qs.parse(body);
+			var reqId = reqObj.id;
+			delete reqObj.id;
+			// Change numbers back to ints
+			for (key in reqObj) {
+				reqObj[key] = parseInt(reqObj[key]);
+			}
 
-		hueRes.on("end", function() {
-			res.write(output);
-			res.end();
-		})
-	});
+			// Send put to chosen light
+			var options = {
+				host: HUE_IP,
+				path: "/api/newdeveloper/lights/" + reqId + "/state",
+				method: "PUT"
+			};
 
-	hueReq.write("{\"hue\":" + hue + ", \"sat\": " + sat + "}");
-	hueReq.end();
+			var hueReq = http.request(options, function(hueRes) {
+				var output = "";
+				hueRes.on("data", function(chunk) {
+					output += chunk;
+				});
+
+				hueRes.on("end", function() {
+					// Need id for callback!
+					var outputObj = JSON.parse(output);
+					console.log(outputObj)
+					// Nasty hack
+					var id = Object.keys(outputObj[0].success)[0].replace(/(^.+\D)(\d+)(\D.+$)/i,'$2');
+					res.write(id);
+					res.end();
+				});
+			});
+console.log(JSON.stringify(reqObj));
+			hueReq.write(JSON.stringify(reqObj));
+			hueReq.end();
+		});
+	}
+	// Assume 3 lights
+
+	// for (var i = 0; i < 3; i++) {
+	// 	var options = {
+	// 		host: HUE_IP,
+	// 		path: "/api/newdeveloper/lights/" + i + "/state",
+	// 		method: "PUT"
+	// 	};
+	// 	var hue = Math.floor(Math.random()*65536);
+	// 	var sat = Math.floor(Math.random()*256);
+
+	// 	var hueReq = http.request(options);
+
+	// 	hueReq.write("{\"hue\":" + hue + ", \"sat\": " + sat + "}");
+	// 	hueReq.end();
+	// }
+	// res.end();
 };
 
 exports.playMusic = function(req, res) {
@@ -109,6 +146,6 @@ exports.indexJs = function indexJS(req, res) {
 
 exports.mp3 = function mp3(req, res) {
 	var bestStream = fs.createReadStream("static/mp3/Portal2-13-Want_You_Gone.mp3");
-
+	//var bestStream = fs.createReadStream("static/mp3/Hello Atari.mp3");
 	bestStream.pipe(res);
 };

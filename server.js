@@ -6,7 +6,7 @@ var url = require("url");
 var handle = {
 	"/": api.index,
 	"/getlights": api.getLights,
-	"/setlights": api.setLight,
+	"/setlight": api.setLight,
 	"/js/dancer.js": api.dancer,
 	"/js/jquery.js": api.jQuery,
 	"/js/index.js": api.indexJs,
