@@ -73,10 +73,17 @@ module.exports = function(ip) {
 								// Need id for callback!
 								var outputObj = JSON.parse(output);
 								console.log(outputObj)
-								// Nasty hack
-								var id = Object.keys(outputObj[0].success)[0].replace(/(^.+\D)(\d+)(\D.+$)/i,'$2');
-								res.write(id);
-								res.end();
+								if ("success" in outputObj[0]) {
+									// Nasty hack
+									var id = Object.keys(outputObj[0].success)[0].replace(/(^.+\D)(\d+)(\D.+$)/i,'$2');
+									res.write(id);
+									res.end();
+								} else {
+									// Light doesn't exist
+									var id = outputObj[0].error.address.replace(/(^.+\D)(\d+)(\D.+$)/i,'$2');
+									res.write(id);
+									res.end();
+								}
 							});
 						});
 
