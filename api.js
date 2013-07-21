@@ -53,7 +53,12 @@ module.exports = function(ip) {
 					if (JSON.stringify(reqObj) !== "{}") {
 						// Change numbers back to ints
 						for (key in reqObj) {
-							reqObj[key] = parseInt(reqObj[key]);
+							if (reqObj[key] !== true && reqObj[key] !== "true") {
+								reqObj[key] = parseInt(reqObj[key]);
+							}
+							if (reqObj[key] === "true") {
+								reqObj[key] = true;
+							}
 						}
 
 						// Send put to chosen light

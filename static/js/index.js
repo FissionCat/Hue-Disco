@@ -36,7 +36,7 @@ $(function() {
 	var baseKick = dancer.createKick({
 		onKick: function(mag) {
 			if ($("#random").is(":checked")) {
-				var length = 5;
+				var length = 3;
 				for (var i = 0; i < length; i++) {
 					if (lightChange[i] === false) {
 						lightChange[i] = true;
@@ -49,7 +49,7 @@ $(function() {
 						$.ajax({
 							url: "/setlight",
 							type: "PUT",
-							data: {id: i + 1, hue: hue, sat: sat},
+							data: {id: i + 1, hue: hue, sat: sat, on: true},
 							dataType: "json"
 						}).done(function(id) {
 							timeout[id - 1] = setTimeout(function() {
@@ -90,7 +90,7 @@ $(function() {
 					$.ajax({
 						url: "/setlight",
 						type: "PUT",
-						data: {id: 1, hue: hue, sat: sat},
+						data: {id: 1, hue: hue, sat: sat, on: true},
 						dataType: "json"
 					}).done(function(id) {
 						timeout[id - 1] = setTimeout(function() {
@@ -99,45 +99,45 @@ $(function() {
 					});
 				}
 
-				if (lightChange[4] === false) {
-					lightChange[4] = true;
+				// if (lightChange[4] === false) {
+				// 	lightChange[4] = true;
 					
-					// Defaults
-					var hue = Math.floor(Math.random()*65536);
-					var sat = Math.floor(Math.random()*256);
-					var bri = Math.floor(Math.random()*256);
-					if ($("#mag").is(":checked")) {
-						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
-						sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-					}
-					if ($("#red").is(":checked")) {
-						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
-						sat = 255;
-						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-					}
-					if ($("#green").is(":checked")) {
-						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
-						sat = 255;
-						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-					}
-					if ($("#blue").is(":checked")) {
-						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+40000;
-						sat = 255;
-						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-					}
-					//console.log("Kicking! " + i + " " + bri);
-					$.ajax({
-						url: "/setlight",
-						type: "PUT",
-						data: {id: 5, hue: hue, sat: sat},
-						dataType: "json"
-					}).done(function(id) {
-						timeout[id - 1] = setTimeout(function() {
-							lightChange[id - 1] = false;
-						}, 100);
-					});
-				}
+				// 	// Defaults
+				// 	var hue = Math.floor(Math.random()*65536);
+				// 	var sat = Math.floor(Math.random()*256);
+				// 	var bri = Math.floor(Math.random()*256);
+				// 	if ($("#mag").is(":checked")) {
+				// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
+				// 		sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				// 	}
+				// 	if ($("#red").is(":checked")) {
+				// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
+				// 		sat = 255;
+				// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				// 	}
+				// 	if ($("#green").is(":checked")) {
+				// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
+				// 		sat = 255;
+				// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				// 	}
+				// 	if ($("#blue").is(":checked")) {
+				// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+40000;
+				// 		sat = 255;
+				// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				// 	}
+				// 	//console.log("Kicking! " + i + " " + bri);
+				// 	$.ajax({
+				// 		url: "/setlight",
+				// 		type: "PUT",
+				// 		data: {id: 5, hue: hue, sat: sat},
+				// 		dataType: "json"
+				// 	}).done(function(id) {
+				// 		timeout[id - 1] = setTimeout(function() {
+				// 			lightChange[id - 1] = false;
+				// 		}, 100);
+				// 	});
+				// }
 			}
 		},
 		frequency: [0, 10],
@@ -176,7 +176,7 @@ $(function() {
 				$.ajax({
 					url: "/setlight",
 					type: "PUT",
-					data: {id: 2, hue: hue, sat: sat},
+					data: {id: 2, hue: hue, sat: sat, on: true},
 					dataType: "json"
 				}).done(function(id) {
 					timeout[id - 1] = setTimeout(function() {
@@ -185,43 +185,43 @@ $(function() {
 				});
 			}
 
-			if (!$("#random").is(":checked") && lightChange[3] === false) {
-				lightChange[3] = true;
-				// Defaults
-				var hue = Math.floor(Math.random()*65536);
-				var sat = Math.floor(Math.random()*256);
-				var bri = Math.floor(Math.random()*256);
-				if ($("#mag").is(":checked")) {
-					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
-					sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-				}
-				if ($("#red").is(":checked")) {
-					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
-					sat = 255;
-					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-				}
-				if ($("#green").is(":checked")) {
-					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
-					sat = 255;
-					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-				}
-				if ($("#blue").is(":checked")) {
-					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+40000;
-					sat = 255;
-					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-				}
-				$.ajax({
-					url: "/setlight",
-					type: "PUT",
-					data: {id: 4, hue: hue, sat: sat},
-					dataType: "json"
-				}).done(function(id) {
-					timeout[id - 1] = setTimeout(function() {
-						lightChange[id - 1] = false;
-					}, 100);
-				});
-			}
+			// if (!$("#random").is(":checked") && lightChange[3] === false) {
+			// 	lightChange[3] = true;
+			// 	// Defaults
+			// 	var hue = Math.floor(Math.random()*65536);
+			// 	var sat = Math.floor(Math.random()*256);
+			// 	var bri = Math.floor(Math.random()*256);
+			// 	if ($("#mag").is(":checked")) {
+			// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
+			// 		sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+			// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+			// 	}
+			// 	if ($("#red").is(":checked")) {
+			// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
+			// 		sat = 255;
+			// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+			// 	}
+			// 	if ($("#green").is(":checked")) {
+			// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
+			// 		sat = 255;
+			// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+			// 	}
+			// 	if ($("#blue").is(":checked")) {
+			// 		hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+40000;
+			// 		sat = 255;
+			// 		bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+			// 	}
+			// 	$.ajax({
+			// 		url: "/setlight",
+			// 		type: "PUT",
+			// 		data: {id: 4, hue: hue, sat: sat},
+			// 		dataType: "json"
+			// 	}).done(function(id) {
+			// 		timeout[id - 1] = setTimeout(function() {
+			// 			lightChange[id - 1] = false;
+			// 		}, 100);
+			// 	});
+			// }
 		},
 		frequency: [10, 30],
 		threshold: midThreshhold
@@ -259,7 +259,7 @@ $(function() {
 				$.ajax({
 					url: "/setlight",
 					type: "PUT",
-					data: {id: 3, hue: hue, sat: sat},
+					data: {id: 3, hue: hue, sat: sat, on: true},
 					dataType: "json"
 				}).done(function(id) {
 					timeout[id - 1] = setTimeout(function() {
