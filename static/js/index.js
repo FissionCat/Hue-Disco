@@ -45,16 +45,6 @@ $(function() {
 						var hue = Math.floor(Math.random()*65536);
 						var sat = Math.floor(Math.random()*256);
 						var bri = Math.floor(Math.random()*256);
-						if ($("#mag").is(":checked")) {
-							hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
-							sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-							bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-						}
-						if ($("#blue").is(":checked")) {
-							hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+40000;
-							sat = 255;
-							bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
-						}
 						//console.log("Kicking! " + i + " " + bri);
 						$.ajax({
 							url: "/setlight",
@@ -79,6 +69,16 @@ $(function() {
 					if ($("#mag").is(":checked")) {
 						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
 						sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+					}
+					if ($("#red").is(":checked")) {
+						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
+						sat = 255;
+						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+					}
+					if ($("#green").is(":checked")) {
+						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
+						sat = 255;
 						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
 					}
 					if ($("#blue").is(":checked")) {
@@ -109,6 +109,16 @@ $(function() {
 					if ($("#mag").is(":checked")) {
 						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
 						sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+					}
+					if ($("#red").is(":checked")) {
+						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
+						sat = 255;
+						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+					}
+					if ($("#green").is(":checked")) {
+						hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
+						sat = 255;
 						bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
 					}
 					if ($("#blue").is(":checked")) {
@@ -148,6 +158,16 @@ $(function() {
 					sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
 					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
 				}
+				if ($("#red").is(":checked")) {
+					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
+					sat = 255;
+					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				}
+				if ($("#green").is(":checked")) {
+					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
+					sat = 255;
+					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				}
 				if ($("#blue").is(":checked")) {
 					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+40000;
 					sat = 255;
@@ -174,6 +194,16 @@ $(function() {
 				if ($("#mag").is(":checked")) {
 					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
 					sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				}
+				if ($("#red").is(":checked")) {
+					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
+					sat = 255;
+					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				}
+				if ($("#green").is(":checked")) {
+					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
+					sat = 255;
 					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
 				}
 				if ($("#blue").is(":checked")) {
@@ -209,6 +239,16 @@ $(function() {
 				if ($("#mag").is(":checked")) {
 					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%65536);
 					sat = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				}
+				if ($("#red").is(":checked")) {
+					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%7000);
+					sat = 255;
+					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
+				}
+				if ($("#green").is(":checked")) {
+					hue = Math.floor((mag*65536*(Math.random()*10/baseThreshold))%9000)+24653;
+					sat = 255;
 					bri = Math.floor((mag*256*(Math.random()*10/baseThreshold))%256);
 				}
 				if ($("#blue").is(":checked")) {
