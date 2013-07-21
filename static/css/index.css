@@ -1,3 +1,10 @@
 h1 {
 	text-align: center;
 }
+.controls {
+	background-color: #476bd6;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	color: #dddddd;
+	padding: 5px;
+}

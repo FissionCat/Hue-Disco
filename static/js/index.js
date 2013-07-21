@@ -49,6 +49,11 @@ $(function() {
 						sat = Math.floor((mag*256*(10/baseThreshold))%256);
 						bri = Math.floor((mag*256*(10/baseThreshold))%256);
 					}
+					if ($("#blue").is(":checked")) {
+						hue = Math.floor((mag*65536*(10/baseThreshold))%9000)+40000;
+						sat = 255;
+						bri = Math.floor((mag*256*(10/baseThreshold))%256);
+					}
 					//console.log("Kicking! " + i + " " + bri);
 					$.ajax({
 						url: "/setlight",
@@ -81,6 +86,11 @@ $(function() {
 					sat = Math.floor((mag*256*(10/baseThreshold))%256);
 					bri = Math.floor((mag*256*(10/baseThreshold))%256);
 				}
+				if ($("#blue").is(":checked")) {
+					hue = Math.floor((mag*65536*(10/baseThreshold))%9000)+40000;
+					sat = 255;
+					bri = Math.floor((mag*256*(10/baseThreshold))%256);
+				}
 				$.ajax({
 					url: "/setlight",
 					type: "PUT",
@@ -110,6 +120,11 @@ $(function() {
 				if ($("#mag").is(":checked")) {
 					hue = Math.floor((mag*65536*(10/baseThreshold))%65536);
 					sat = Math.floor((mag*256*(10/baseThreshold))%256);
+					bri = Math.floor((mag*256*(10/baseThreshold))%256);
+				}
+				if ($("#blue").is(":checked")) {
+					hue = Math.floor((mag*65536*(10/baseThreshold))%9000)+40000;
+					sat = 255;
 					bri = Math.floor((mag*256*(10/baseThreshold))%256);
 				}
 				$.ajax({
