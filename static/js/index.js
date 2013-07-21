@@ -26,11 +26,6 @@ $(function() {
 		dancer.play()
 	});
 
-	$("#radio").on("click", function(e) {
-		e.preventDefault();
-		e.stopPropogation();
-	});
-
 	var lightChange = [false, false, false];
 	var timeout = [null, null, null];
 	var baseThreshold = 0.33;
@@ -54,7 +49,7 @@ $(function() {
 						sat = Math.floor((mag*256*(10/baseThreshold))%256);
 						bri = Math.floor((mag*256*(10/baseThreshold))%256);
 					}
-					console.log("Kicking! " + i + " " + bri);
+					//console.log("Kicking! " + i + " " + bri);
 					$.ajax({
 						url: "/setlight",
 						type: "PUT",
