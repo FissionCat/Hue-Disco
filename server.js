@@ -1,10 +1,10 @@
 var http = require("http");
-var api = require("./api");
+var api = require("./api")(process.argv[2]);
 var route = require("./router").route;
 var url = require("url");
 
 var handle = {
-	"/": api.index,
+	"/": api.indexServe,
 	"/getlights": api.getLights,
 	"/setlight": api.setLight,
 	"/js/dancer.js": api.dancer,
