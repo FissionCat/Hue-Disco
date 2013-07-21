@@ -10,6 +10,7 @@ var handle = {
 	"/js/dancer.js": api.dancer,
 	"/js/jquery.js": api.jQuery,
 	"/js/index.js": api.indexJs,
+	"/css/index.css": api.indexCss,
 	"/mp3/wantyougone": api.mp3
 }
 

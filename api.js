@@ -12,6 +12,7 @@ var indexHtml = fs.readFileSync("static/html/index.html", {encoding: "utf8"});
 var dancerJs = fs.readFileSync("static/js/dancer.js", {encoding: "utf8"});
 var jqueryJs = fs.readFileSync("static/js/jquery.js", {encoding: "utf8"});
 var indexJs = fs.readFileSync("static/js/index.js", {encoding: "utf8"});
+var css = fs.readFileSync("static/css/index.css", {encoding: "utf8"});
 
 module.exports = function(ip) {
 	var HUE_IP = ip;
@@ -107,6 +108,12 @@ module.exports = function(ip) {
 		indexJs: function indexJS(req, res) {
 			res.writeHeader(200, {"Content-Type": "application/javascript"});
 			res.write(indexJs);
+			res.end();
+		},
+
+		indexCss: function indexCss(req, res) {
+			res.writeHeader(200, {"Content-Type": "text/css"});
+			res.write(css);
 			res.end();
 		},
 
