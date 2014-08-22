@@ -1,0 +1,18 @@
+{
+    "name": "hue-disco",
+    "version": "1.0.0",
+    "description": "A music visualiser for Hue lightbulbs.",
+    "license": "MIT",
+    "author": {
+        "name": "Maria Chapman",
+        "email": "maria.catherine.chapman@gmail.com"
+    },
+    "bugs": {
+        "url": "https://github.com/FissionCat/Hue-Disco/issues"
+    },
+    "dependencies": {
+        "lame": "1.0.2",
+        "speaker": "0.0.10"
+    },
+    "private": true
+}
