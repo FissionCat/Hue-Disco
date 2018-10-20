@@ -14,5 +14,8 @@
         "lame": "1.2.4",
         "speaker": "0.4.1"
     },
+    "engines": {
+        "node": ">=6.4.0"
+    },
     "private": true
 }

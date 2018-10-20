@@ -1,26 +1,23 @@
-var fs = require("fs");
-var http = require("http");
-var lame = require("lame");
-var Speaker = require("speaker");
-var stream = require("stream");
-var qs = require("querystring");
-
-var HUE_IP = "192.168.1.144";
+const fs = require("fs");
+const http = require("http");
+const lame = require("lame");
+const Speaker = require("speaker");
+const stream = require("stream");
+const qs = require("querystring");
 
 // Pages
-var indexHtml = fs.readFileSync("static/html/index.html", {encoding: "utf8"});
-var dancerJs = fs.readFileSync("static/js/dancer.js", {encoding: "utf8"});
-var jqueryJs = fs.readFileSync("static/js/jquery.js", {encoding: "utf8"});
-var indexJs = fs.readFileSync("static/js/index.js", {encoding: "utf8"});
-var css = fs.readFileSync("static/css/index.css", {encoding: "utf8"});
+const indexHtml = fs.readFileSync("static/html/index.html", {encoding: "utf8"});
+const dancerJs = fs.readFileSync("static/js/dancer.js", {encoding: "utf8"});
+const jqueryJs = fs.readFileSync("static/js/jquery.js", {encoding: "utf8"});
+const indexJs = fs.readFileSync("static/js/index.js", {encoding: "utf8"});
+const css = fs.readFileSync("static/css/index.css", {encoding: "utf8"});
 
-module.exports = function(ip) {
-  var HUE_IP = ip;
+module.exports = function(hue_ip, username) {
   return {
     getLights: function getLights(req, res) {
       var options = {
-        host: HUE_IP,
-        path: "/api/newdeveloper/lights",
+        host: hue_ip,
+        path: `/api/${username}/lights`,
         method: "GET"
       };
 
@@ -63,8 +60,8 @@ module.exports = function(ip) {
 
             // Send put to chosen light
             var options = {
-              host: HUE_IP,
-              path: "/api/newdeveloper/lights/" + reqId + "/state",
+              host: hue_ip,
+              path: `/api/${username}/lights/${reqId}/state`,
               method: "PUT"
             };
 
@@ -97,6 +94,39 @@ module.exports = function(ip) {
           }
         });
       }
+    },
+
+    createUser: function createUser(req, res) {
+      const postData = JSON.stringify({
+        devicetype: "hue-disco"
+      });
+      const hueReq = http.request({
+        host: hue_ip,
+        path: "/api",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": Buffer.byteLength(postData)
+        }
+      }, function(hueRes) {
+        let output = "";
+        hueRes.on("data", function(chunk) {
+          output += chunk;
+        });
+
+        hueRes.on("end", function() {
+          const outputJson = JSON.parse(output);
+          if (outputJson.success && outputJson.success.username) {
+            fs.writeFileSync("config.json", JSON.stringify({username: outputJson[0].success.username}));
+          }
+
+          res.write(output);
+          res.end();
+        });
+      });
+
+      hueReq.write(postData);
+      hueReq.end();
     },
 
     indexServe: function index(req, res) {
