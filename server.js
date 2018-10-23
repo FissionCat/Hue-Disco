@@ -8,8 +8,8 @@ let username = null;
 
 try {
   username = JSON.parse(fs.readFileSync("config.json", {encoding: "utf8"})).username;
-} catch {
-  console.log(`config.json not found - please press the link button on your Hue bridge and open localhost:${PORT}/createuser in your browser`);
+} catch(err) {
+  console.log(`config.json not found - please press the link button on your Hue bridge and open localhost:${PORT}/createuser in your browser. \n${err}`);
 }
 
 const api = require("./api")(process.argv[2], username);
